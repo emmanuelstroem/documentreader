@@ -1,0 +1,7 @@
+Django==2.2.5
+django-tastypie==0.14.2
+# psycopg2==2.8.3
+pyPDF2==1.26.0
+gunicorn==19.9.0
+requests==2.22.0
+pillow==6.2.0
