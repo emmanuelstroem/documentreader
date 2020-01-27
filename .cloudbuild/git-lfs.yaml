@@ -1,0 +1,5 @@
+steps:
+- name: "gcr.io/cloud-builders/docker"
+  args: [ 'build', '-f', 'git-lfs.Dockerfile', '-t', 'gcr.io/$PROJECT_ID/git-lfs', '.']
+images:
+- "gcr.io/$PROJECT_ID/git-lfs"
