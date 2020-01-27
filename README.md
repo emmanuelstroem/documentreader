@@ -50,7 +50,9 @@ docker run --name dummy --rm -it -p 3000:3000 <dummy-image-name>
 docker run --name reader --rm --link dummy:dummy -e "DEBUG=False" -e "BASE_URL=http://dummy:3000" -e "DJANGO_ALLOWED_HOSTS=localhost" -it -p 8000:8000 reader python manage.py runserver 0.0.0.0:8000
 ```
 
-6 Visit the app on: http://localhost:8000
+6. Visit the app on: http://localhost:8000
+
+7. Prometheus Metrics will be available at: http://localhost:8000/prometheus/metrics
 
 
 ## Running in GCP:
@@ -97,6 +99,8 @@ kubectl apply -f .kubernetes/managed_ssl_certs.yaml
 
 6. Access the Application through the Ingress IP or using the domain name specified in `step 5`
 
+7. Access Prometheus Metrics through http://<ingress-ip/domain>/prometheus/metrics
+
 
 
 ## Production Ready:
@@ -108,3 +112,16 @@ kubectl apply -f .kubernetes/managed_ssl_certs.yaml
 - internal service communication
 - healthcheck
 
+## Improvements:
+### documentreader:
+- Landing Page
+- Error in UI with reload capability
+- Expose Prometheus Metrics
+
+### infrastructure
+#### Spinnaker
+- Spinnaker Auth
+- Test, Build, Deployment Pipelines
+- Notifications
+- Multi-cluster
+-
