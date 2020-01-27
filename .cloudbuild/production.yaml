@@ -1,0 +1,12 @@
+steps:
+- id: Build Docker Image
+  name: 'gcr.io/cloud-builders/docker'
+  args: ['build', 'project_id=$PROJECT_ID', '-t', 'gcr.io/$PROJECT_ID/${_APP_}:${_ENV_}-$BRANCH_NAME-$SHORT_SHA', '-t', 'gcr.io/$PROJECT_ID/${_APP_}:${_ENV_}-latest', '.']
+
+substitutions:
+  _ENV_: production
+  _APP_: documentreader
+
+images:
+  - 'gcr.io/$PROJECT_ID/${_APP_}:${_ENV_}-$BRANCH_NAME-$SHORT_SHA'
+  - 'gcr.io/$PROJECT_ID/${_APP_}:${_ENV_}-latest'
