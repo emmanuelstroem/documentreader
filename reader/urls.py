@@ -8,4 +8,5 @@ from . import views
 urlpatterns = [
     path('<int:id>', views.document),
     path('health', views.health_check),
+    path('', views.health_check),
 ]
