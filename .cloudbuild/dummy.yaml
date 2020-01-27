@@ -1,0 +1,16 @@
+steps:
+- id: Clone Backend Repo
+  name: 'gcr.io/$PROJECT_ID/git-lfs'
+  args: ['clone', 'https://github.com/e-conomic/hiring-assigments.git']
+
+- id: Build Docker Image
+  name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-f', 'hiring-assigments/sre/dummy-pdf-or-png/Dockerfile', '-t', 'gcr.io/$PROJECT_ID/${_APP_}:${_ENV_}-$BRANCH_NAME-$SHORT_SHA', '-t', 'gcr.io/$PROJECT_ID/${_APP_}:${_ENV_}-latest', './hiring-assigments/sre/dummy-pdf-or-png/']
+
+substitutions:
+  _ENV_: production
+  _APP_: dummy
+
+images:
+  - 'gcr.io/$PROJECT_ID/${_APP_}:${_ENV_}-$BRANCH_NAME-$SHORT_SHA'
+  - 'gcr.io/$PROJECT_ID/${_APP_}:${_ENV_}-latest'
