@@ -1,0 +1,54 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: documentreader
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: reader-service
+  namespace: documentreader
+spec:
+  selector:
+    app:  reader
+  type:  NodePort
+  ports:
+  - name: reader-port
+    port: 80
+    targetPort: 8000
+
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: reader-ingress
+  namespace: documentreader
+  annotations:
+    kubernetes.io/ingress.global-static-ip-name: reader-ingress
+    networking.gke.io/managed-certificates: reader-eopio-ssl-cert
+spec:
+  backend:
+    serviceName: reader-service
+    servicePort: 80
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dummy
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: dummy-service
+  namespace: dummy
+spec:
+  selector:
+    app: dummy
+  type: NodePort
+  ports:
+  - name: dummy-port
+    port: 80
+    targetPort: 3000

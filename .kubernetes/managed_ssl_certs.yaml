@@ -1,0 +1,9 @@
+---
+apiVersion: networking.gke.io/v1beta1
+kind: ManagedCertificate
+metadata:
+  name: reader-eopio-ssl-cert  # add this to ingress before running this yaml
+  namespace: documentreader
+spec:
+  domains:
+    - reader.eopio.com

@@ -1,0 +1,28 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: dummy-deployment
+  namespace: dummy
+  labels:
+    app: dummy
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: dummy
+    spec:
+      containers:
+      - name: dummy-app
+        image: gcr.io/ansiterra/dummy:production-latest
+        imagePullPolicy: Always
+        ports:
+        - name: dummy-port
+          containerPort: 3000
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"

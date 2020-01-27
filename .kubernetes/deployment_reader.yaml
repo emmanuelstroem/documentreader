@@ -1,0 +1,49 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: reader-deployment
+  namespace: documentreader
+  labels:
+    app: reader
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: reader
+    spec:
+      containers:
+      - name: reader-app
+        image: gcr.io/ansiterra/documentreader:production-latest
+        imagePullPolicy: Always
+        command: ['python', 'manage.py', 'runserver', '0.0.0.0:8000']
+        ports:
+        - name: reader-port
+          containerPort: 8000
+        env:
+        - name: DEBUG
+          value: "False"
+        - name: DJANGO_ALLOWED_HOSTS
+          value: '*'
+        - name: BASE_URL
+          value: "http://dummy-service.dummy.svc.cluster.local"
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: reader-port
+          initialDelaySeconds: 10
+          timeoutSeconds: 15
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: reader-port
+          initialDelaySeconds: 20
+          periodSeconds: 15
+          timeoutSeconds: 30
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
