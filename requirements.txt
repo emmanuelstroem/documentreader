@@ -1,4 +1,4 @@
-Django==2.2.13
+Django==2.2.21
 django-tastypie==0.14.2
 # psycopg2==2.8.3
 pyPDF2==1.26.0
